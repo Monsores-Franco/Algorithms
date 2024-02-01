@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct no{
+    int valor;
+    struct No *prox;
+}No;
+
+
+typedef struct{
+    No *inicio;
+    int tam;
+}Lista;
+
+
+void inseririnicio(Lista *lista,int valor);
+void printlista(Lista *lista);
+
+int main(){
+    Lista lista;
+
+    lista.inicio = NULL;
+    lista.tam = 0;
+
+    int opcao,valor;
+
+    do{
+        printf("1 - inserir no inicio \n2 - imprimir\n5-sair\n");
+        scanf("%d",&opcao);
+        getchar();
+
+        switch(opcao){
+            case 1:
+                printf("digite o valor: ");
+                scanf("%d",&valor);
+                getchar();
+                inseririnicio(&lista,valor);
+                break;
+            case 2:
+                printlista(&lista);
+                break;
+            case 5:
+                break;
+            default:
+                printf("opcao invalida\n");
+        }
+    }while(opcao != 5);
+
+    return 0;
+}
+
+void inseririnicio(Lista *lista,int valor){
+    No *novo = (No*)malloc(sizeof(No));   // tem que ser ponteiro, porque assim que o procedimento acabar, ele deixaria de existir.
+    novo->valor = valor; //(*novo).valor = valor;
+    novo->prox = lista->inicio;
+
+    lista->inicio = novo;
+    lista->tam++;
+}
+
+void printlista(Lista *lista){
+    
+    No *inicio = lista->inicio;
+    while(inicio != NULL){
+        printf("%d ",inicio->valor);
+        inicio = inicio->prox;
+    }
+    printf("\n\n");
+
+}
